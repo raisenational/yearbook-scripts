@@ -1,0 +1,23 @@
+name: test
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout ${{ github.sha }}
+        uses: actions/checkout@v3
+
+      - name: Install ImageMagick
+        run: sudo apt install imagemagick
+
+      - name: Download example images
+        run: |
+          curl https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg --output input/1.jpg
+          curl https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png --output input/2.png
+
+      - name: Run convert script
+        run: ./convert.sh
